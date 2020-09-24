@@ -1,0 +1,20 @@
+# three-tiered food web 6D
+par par_alph=.1,par_uf=2,par_uh=0,par_ug=0,Y0=0.019,Y1=0.04,Y2=0.06
+par km0=29,km1=26,km2=35,KS0=0.053
+par KS1=0.302,KS2=2.5e-5,L0=1e-6,KI2=3.5e-6
+
+dx0/dt=((s1/(1+s1))*(s3/(L0/KS2+s3))-par_alph)*x0
+dx1/dt=((km1/km0)*(Y1/Y0)*(s2/(1+s2))*(1/(1+(KS2/KI2)*s3))-par_alph)*x1
+dx2/dt=((km2/km0)*(Y2/Y0)*s3/(1+s3)-par_alph)*x2
+ds1/dt=par_alph*(par_uf-s1)-(s1/(1+s1))*(s3/(L0/KS2+s3))*x0
+ds2/dt=par_alph*(par_ug-s2)+(KS0/KS1)*(224/208)*(1-Y0)*(s1/(1+s1))*(s3/(L0/KS2+s3))*x0-((km1/km0)*(Y1/Y0)*(s2/(1+s2))*(1/(1+(KS2/KI2)*s3)))*x1
+ds3/dt=par_alph*(par_uh-s3)-(16/208)*(KS0/KS2)*(s1/(1+s1))*(s3/(L0/KS2+s3))*x0+(KS1/KS2)*(32/224)*(1-Y1)*(km1/km0)*(Y1/Y0)*(s2/(1+s2))*(1/(1+(KS2/KI2)*s3))*x1-((km2/km0)*(Y2/Y0)*s3/(1+s3))*x2
+
+init x0=0.1,x1=0.1,x2=0.1,s1=1,s2=1,s3=1
+
+@ maxstor=100000,xlo=0,ylo=0,xhi=2,yhi=2.,bounds=10000000
+@ xp=x0,yp=x1,zp=t,total=100,dt=.001,nmesh=500
+@ autoxmin=0,autoxmax=2,autoymin=0,autoymax=1.2,autovar=x
+@ ds=0.01,dsmin=1e-05,dsmax=.05,npr=10,ntst=30,epss=1e-07,
+@ epsl=1e-07,epsu=1e-07
+done
